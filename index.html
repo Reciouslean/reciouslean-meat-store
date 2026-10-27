@@ -425,16 +425,6 @@ function renderProducts() {
   document.getElementById("products").innerHTML =
     products.map(p => `
       <article class="card">
-        <div class="food">${p.emoji}</div>
-        <h3>${p.name}</h3>
-        <div class="pack">${p.pack}</div>
-        <div class="price">${money(p.price)}</div>
-        <button class="add" onclick="addToCart(${p.id})">
-          Add to Cart
-function renderProducts() {
-  document.getElementById("products").innerHTML =
-    products.map(p => `
-      <article class="card">
         <img
           class="food-photo"
           src="${{
@@ -452,9 +442,6 @@ function renderProducts() {
         <button class="add" onclick="addToCart(${p.id})">
           Add to Cart
         </button>
-      </article>
-    `).join("");
-}        </button>
       </article>
     `).join("");
 }
