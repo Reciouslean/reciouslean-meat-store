@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171717">
+<title>ReciousLean Meat Store</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f5f5;color:#222;
+font-family:Arial,sans-serif}
+header{background:#191919;color:white;padding:24px 18px;
+border-bottom:4px solid #c62828}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0;color:#ddd;font-size:14px}
+main{max-width:850px;margin:auto;padding:18px}
+.hero{background:#7f1d1d;color:white;padding:22px;
+border-radius:15px;margin-bottom:22px}
+.hero h2{margin:0 0 8px}
+.hero p{margin:0;line-height:1.5}
+h2.section{font-size:21px}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.card{background:white;border-radius:13px;padding:14px;
+box-shadow:0 2px 8px #0000000d}
+.food{font-size:42px;background:#fff1f0;border-radius:10px;
+text-align:center;padding:12px;margin-bottom:10px}
+.card h3{font-size:16px;margin:6px 0}
+.pack{color:#666;font-size:13px}
+.price{color:#b91c1c;font-size:18px;font-weight:bold;
+margin:10px 0}
+button{border:0;border-radius:8px;padding:11px 13px;
+background:#991b1b;color:white;font-weight:bold;
+cursor:pointer;font-size:14px}
+button:active{opacity:.8}
+.add{width:100%}
+.panel{background:white;padding:18px;border-radius:13px;
+margin-top:22px;box-shadow:0 2px 8px #0000000d}
+.panel h2{margin-top:0;font-size:20px}
+.cartrow{display:flex;align-items:center;gap:8px;
+justify-content:space-between;border-bottom:1px solid #eee;
+padding:12px 0}
+.cartrow button{padding:7px 11px}
+.qty{display:flex;align-items:center;gap:8px}
+.total{font-size:21px;font-weight:bold;margin:18px 0}
+label{display:block;font-size:14px;font-weight:bold;
+margin:14px 0 6px}
+input,select,textarea{width:100%;padding:12px;
+border:1px solid #ccc;border-radius:8px;
+font-size:15px;background:white}
+textarea{min-height:75px;resize:vertical}
+.checkout{width:100%;margin-top:17px;padding:15px;
+font-size:16px}
+.note{font-size:13px;color:#666;line-height:1.5}
+footer{text-align:center;background:#191919;color:#ddd;
+padding:22px;margin-top:25px;font-size:13px}
+@media(max-width:360px){
+main{padding:12px}.products{gap:9px}
+.card{padding:10px}.card h3{font-size:14px}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>🥩 ReciousLean Meat Store</h1>
+  <p>Fresh choices for your table · MAGU, Area 14</p>
+</header>
+
+<main>
+  <section class="hero">
+    <h2>Welcome to our meat store!</h2>
+    <p>Choose your favourite cuts, add them to your cart
+    and place your order. Delivery or pickup available.</p>
+  </section>
+
+  <h2 class="section">Our Products</h2>
+  <section class="products" id="products"></section>
+
+  <section class="panel" id="cart">
+    <h2>🛒 Your Shopping Cart</h2>
+    <div id="cartItems">Your cart is empty.</div>
+    <div class="total">Total: <span id="total">MWK 0</span></div>
+
+    <h2>📦 Checkout</h2>
+
+    <form id="orderForm">
+      <label for="customer">Your name</label>
+      <input id="customer" required placeholder="Enter your name">
+
+      <label for="phone">Phone number</label>
+      <input id="phone" type="tel" required
+      placeholder="Your contact number">
+
+      <label for="fulfilment">Delivery or pickup</label>
+      <select id="fulfilment" required>
+        <option value="Delivery">Delivery</option>
+        <option value="Pickup at MAGU, Area 14">
+          Pickup at MAGU, Area 14
+        </option>
+      </select>
+
+      <label for="address">Delivery address or directions</label>
+      <textarea id="address"
+      placeholder="Enter your delivery location if needed"></textarea>
+
+      <label for="payment">Payment method</label>
+      <select id="payment" required>
+        <option value="Cash">Cash on delivery/pickup</option>
+        <option value="Airtel Money">Airtel Money</option>
+        <option value="TNM Mpamba">TNM Mpamba</option>
+      </select>
+
+      <label for="notes">Additional notes (optional)</label>
+      <textarea id="notes"
+      placeholder="Any special instructions?"></textarea>
+
+      <p class="note">
+        Mobile-money payments are confirmed manually.
+        Please wait for payment instructions from the store.
+        Delivery charges, if any, will be confirmed by the store.
+      </p>
+
+      <button class="checkout" type="submit">
+        Place Order on WhatsApp
+      </button>
+    </form>
+    <p class="note" id="status" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer>
+  <strong>ReciousLean Meat Store</strong>
+  <p>MAGU, Area 14 · Malawi</p>
+  Fresh products. Friendly service.
+</footer>
+
+<script>
+const products = [
+  {id:1,name:"Chicken Wings",price:6000,
+   pack:"1 kg per pack",emoji:"🍗"},
+  {id:2,name:"Chicken Drumsticks",price:6000,
+   pack:"1 kg per pack",emoji:"🍗"},
+  {id:3,name:"Chicken Cutlets",price:4000,
+   pack:"1 kg per pack",emoji:"🍖"},
+  {id:4,name:"Chicken Liver",price:2300,
+   pack:"500 g per pack",emoji:"🥩"}
+];
+
+// Replace this with your WhatsApp number, including
+// Malawi's country code 265, without the + sign.
+const STORE_WHATSAPP = "265980359386";
+
+const cart = {};
+
+function money(amount) {
+  return "MWK " + amount.toLocaleString("en-US");
+}
+
+function renderProducts() {
+  document.getElementById("products").innerHTML =
+    products.map(p => `
+      <article class="card">
+        <div class="food">${p.emoji}</div>
+        <h3>${p.name}</h3>
+        <div class="pack">${p.pack}</div>
+        <div class="price">${money(p.price)}</div>
+        <button class="add" onclick="addToCart(${p.id})">
+          Add to Cart
+        </button>
+      </article>
+    `).join("");
+}
+
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+}
+
+function changeQty(id, amount) {
+  cart[id] = (cart[id] || 0) + amount;
+  if (cart[id] <= 0) delete cart[id];
+  renderCart();
+}
+
+function renderCart() {
+  const chosen = products.filter(p => cart[p.id]);
+  const area = document.getElementById("cartItems");
+
+  if (!chosen.length) {
+    area.textContent = "Your cart is empty.";
+  } else {
+    area.innerHTML = chosen.map(p => `
+      <div class="cartrow">
+        <div>
+          <strong>${p.name}</strong><br>
+          <small>${money(p.price)} each</small>
+        </div>
+        <div class="qty">
+          <button type="button"
+            onclick="changeQty(${p.id},-1)">−</button>
+          <span>${cart[p.id]}</span>
+          <button type="button"
+            onclick="changeQty(${p.id},1)">+</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  const total = products.reduce(
+    (sum,p) => sum + p.price * (cart[p.id] || 0), 0
+  );
+  document.getElementById("total").textContent = money(total);
+}
+
+document.getElementById("orderForm").addEventListener(
+  "submit", function(event) {
+    event.preventDefault();
+
+    const chosen = products.filter(p => cart[p.id]);
+    if (!chosen.length) {
+      alert("Please add at least one product to your cart.");
+      return;
+    }
+
+    const customer = document.getElementById("customer").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const fulfilment = document.getElementById("fulfilment").value;
+    const address = document.getElementById("address").value.trim();
+    const payment = document.getElementById("payment").value;
+    const notes = document.getElementById("notes").value.trim();
+
+    if (fulfilment === "Delivery" && !address) {
+      alert("Please enter your delivery address.");
+      return;
+    }
+
+    const total = products.reduce(
+      (sum,p) => sum + p.price * (cart[p.id] || 0), 0
+    );
+
+    let message = "NEW ORDER - RECIOUSLEAN MEAT STORE\n\n";
+    message += "Customer: " + customer + "\n";
+    message += "Phone: " + phone + "\n";
+    message += "Order type: " + fulfilment + "\n";
+
+    if (address) message += "Address: " + address + "\n";
+
+    message += "\nITEMS:\n";
+    chosen.forEach(p => {
+      message += p.name + " (" + p.pack + ") x " +
+        cart[p.id] + " = " +
+        money(p.price * cart[p.id]) + "\n";
+    });
+
+    message += "\nTOTAL: " + money(total) + "\n";
+    message += "Payment: " + payment + "\n";
+    if (notes) message += "Notes: " + notes + "\n";
+    message += "\nPlease confirm my order.";
+
+    if (!/^265\d{9}$/.test(STORE_WHATSAPP)) {
+      document.getElementById("status").textContent =
+        "Your order is ready, but the store WhatsApp number " +
+        "has not been configured yet. Add your number in the code.";
+      alert("The store WhatsApp number still needs to be added.");
+      return;
+    }
+
+    const url = "https://wa.me/" + STORE_WHATSAPP +
+      "?text=" + encodeURIComponent(message);
+
+    window.location.href = url;
+  }
+);
+
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
