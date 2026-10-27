@@ -1,3 +1,266 @@
++\
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --green: #176b3a;
+  --dark-green: #104b2b;
+  --red: #c62828;
+  --cream: #f7f8f4;
+  --text: #202820;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+header {
+  background: linear-gradient(135deg, #104b2b, #21834b);
+  color: white;
+  padding: 25px 18px;
+  border-bottom: 4px solid var(--red);
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 800;
+}
+
+header p {
+  margin: 7px 0 0;
+  color: #e4f3e8;
+  font-size: 14px;
+}
+
+main {
+  max-width: 950px;
+  margin: auto;
+  padding: 18px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #104b2b, #21834b);
+  color: white;
+  padding: 26px 22px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 22px #104b2b20;
+}
+
+.hero h2 {
+  margin: 0 0 10px;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin: 0;
+  line-height: 1.7;
+  color: #edf8ef;
+}
+
+h2.section {
+  font-size: 23px;
+  margin: 25px 0 15px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e7ebe4;
+  border-radius: 17px;
+  padding: 14px;
+  box-shadow: 0 5px 16px #142b1410;
+  overflow: hidden;
+}
+
+.food-photo {
+  display: block;
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  border-radius: 13px;
+  margin-bottom: 12px;
+  background: #edf5eb;
+}.food {
+  font-size: 48px;
+  background: #edf5eb;
+  border-radius: 13px;
+  text-align: center;
+  padding: 20px 8px;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 6px 0;
+}
+
+.pack {
+  color: #687368;
+  font-size: 13px;
+}
+
+.price {
+  color: var(--green);
+  font-size: 19px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--green);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  min-height: 44px;
+}
+
+button:active {
+  opacity: .8;
+}
+
+.add {
+  width: 100%;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+  border: 1px solid #e7ebe4;
+  border-radius: 18px;
+  margin-top: 25px;
+  box-shadow: 0 5px 18px #142b1410;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 21px;
+}
+
+.cartrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  border-bottom: 1px solid #edf0eb;
+  padding: 13px 0;
+}
+
+.cartrow button {
+  padding: 7px 11px;
+  min-height: 36px;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.total {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 20px 0;
+  color: var(--green);
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 15px 0 7px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cfd8ce;
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+  color: var(--text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #21834b55;
+  border-color: var(--green);
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+.checkout {
+  width: 100%;
+  margin-top: 18px;
+  padding: 16px;
+  font-size: 16px;
+  background: #168044;
+}
+
+.note {
+  font-size: 13px;
+  color: #687368;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  background: #103c25;
+  color: #e1eee4;
+  padding: 25px 18px;
+  margin-top: 30px;
+  font-size: 13px;
+}
+
+@media (max-width: 360px) {
+  main {
+    padding: 12px;
+  }
+
+  .products {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .food {
+    font-size: 40px;
+    padding: 16px 6px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 17px;
+  }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -168,7 +431,30 @@ function renderProducts() {
         <div class="price">${money(p.price)}</div>
         <button class="add" onclick="addToCart(${p.id})">
           Add to Cart
+function renderProducts() {
+  document.getElementById("products").innerHTML =
+    products.map(p => `
+      <article class="card">
+        <img
+          class="food-photo"
+          src="${{
+            1: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=600&q=80",
+            2: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80",
+            3: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=600&q=80",
+            4: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=600&q=80"
+          }[p.id]}"
+          alt="${p.name}"
+          loading="lazy"
+        >
+        <h3>${p.name}</h3>
+        <div class="pack">${p.pack}</div>
+        <div class="price">${money(p.price)}</div>
+        <button class="add" onclick="addToCart(${p.id})">
+          Add to Cart
         </button>
+      </article>
+    `).join("");
+}        </button>
       </article>
     `).join("");
 }
