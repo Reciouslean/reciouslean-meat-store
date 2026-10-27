@@ -329,6 +329,82 @@ padding:22px;margin-top:25px;font-size:13px}
 main{padding:12px}.products{gap:9px}
 .card{padding:10px}.card h3{font-size:14px}
 }
+/* Professional homepage banner */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #104b2b, #21834b);
+  color: #ffffff;
+  padding: 30px 24px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 22px rgba(16, 75, 43, 0.18);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #d7f5a5;
+  margin-bottom: 10px;
+}
+
+.hero h2 {
+  color: #ffffff;
+  font-size: clamp(25px, 5vw, 38px);
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+.hero p {
+  color: #edf8ef;
+  font-size: 15px;
+  margin: 0 0 20px;
+  max-width: 430px;
+}
+
+.hero-button {
+  display: inline-block;
+  background: #ffffff;
+  color: #104b2b;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.hero-button:hover {
+  background: #e8f5e9;
+}
+
+.hero-decoration {
+  font-size: clamp(55px, 12vw, 100px);
+  flex-shrink: 0;
+  transform: rotate(-12deg);
+  opacity: 0.95;
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 24px 17px;
+  }
+
+  .hero-decoration {
+    font-size: 52px;
+  }
+}
 </style>
 </head>
 
@@ -340,6 +416,19 @@ main{padding:12px}.products{gap:9px}
 
 <main>
   <section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">FRESH • QUALITY • VALUE</span>
+    <h2>Quality Meat for Your Family</h2>
+    <p>
+      Shop your favourite chicken cuts at great prices.
+      Order online for delivery or pickup at MAGU, Area 14.
+    </p>
+    <a class="hero-button" href="#products">
+      Shop Our Products ↓
+    </a>
+  </div>
+  <div class="hero-decoration" aria-hidden="true">🥩</div>
+</section>
     <h2>Welcome to our meat store!</h2>
     <p>Choose your favourite cuts, add them to your cart
     and place your order. Delivery or pickup available.</p>
